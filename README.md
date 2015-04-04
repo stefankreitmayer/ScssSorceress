@@ -1,14 +1,16 @@
 # ScssSorceress
 Ruby script for indenting .scss files
 
-Handles nested blocks and line comments as expected. For example:
+It treats nested blocks and line comments as one would expect. For example:
 
+```
 .outer{
   .inner{
     some stuff
     //comment
   }
 }
+```
 
 ## Installation
 
