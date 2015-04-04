@@ -1,0 +1,22 @@
+// Comments are aligned like this
+
+.stuff{
+// foo
+// bar
+}
+
+// Curly braces in line comments are ignored
+
+.content{
+// so this is OK {{{{
+}
+
+/* Block comments
+look like
+this */
+
+/*
+.section{
+commented out
+}
+*/
