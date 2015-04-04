@@ -42,6 +42,10 @@ describe ScssSorceress do
       expect(indenter.indent_text("a \t")).to eql("a")
       expect(indenter.indent_text("a \t\n")).to eql("a\n")
     end
+
+    it 'ignores braces in comments' do
+      expect(indenter.indent_text("//aaa{\nbbb")).to eql("//aaa{\nbbb")
+    end
   end
 
   describe '#indent_line' do

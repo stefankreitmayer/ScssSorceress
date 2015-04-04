@@ -7,7 +7,7 @@ class ScssSorceress
     text.each_line do |line|
       if output.empty?
         output << indent_line(line, 0)
-        set_next_depth(line)
+        @next_depth = non_negative(delta_brackets(line))
       else
         output << autoindent_line(line)
       end
@@ -16,7 +16,7 @@ class ScssSorceress
   end
 
   def indent_line(line, depth)
-    '  ' * zero_or_more(depth) + trim(line)
+    '  ' * non_negative(depth) + trim(line)
   end
 
   def depth_of_line(line)
@@ -29,17 +29,13 @@ class ScssSorceress
 
   private
 
-  def set_next_depth(line)
-    @next_depth += count_opening(line)
-  end
-
   def autoindent_line(line)
     if line_empty?(line)
       indent_line(line, 0)
     else
-      depth = zero_or_more(@next_depth - count_closing(line))
-      result = indent_line(line, depth)
-      set_next_depth(result)
+      @next_depth = non_negative(@next_depth + negative(delta_brackets(line)))
+      result = indent_line(line, @next_depth)
+      @next_depth += non_negative(delta_brackets(line))
       result
     end
   end
@@ -56,15 +52,25 @@ class ScssSorceress
     line.index("\n") ? line.rstrip + "\n" : line.rstrip
   end
 
-  def count_opening(line)
-    zero_or_more(line.count('{') - line.count('}'))
+  def delta_brackets(line)
+    line = strip_comments(line)
+    line.count('{') - line.count('}')
   end
 
-  def count_closing(line)
-    zero_or_more(line.count('}') - line.count('{'))
+  def strip_comments(line)
+    pos = line.index('//')
+    if pos
+      line.slice(0, pos)
+    else
+      line
+    end
   end
 
-  def zero_or_more(n)
+  def negative(n)
+    n > 0 ? 0 : n
+  end
+
+  def non_negative(n)
     n < 0 ? 0 : n
   end
 end
