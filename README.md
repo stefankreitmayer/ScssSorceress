@@ -12,15 +12,21 @@ Handles nested blocks and line comments as expected. For example:
 
 ## Installation
 
-Run it from the command line like this
+Run the script from the command line like this
+
+```
 ruby scss_sorceress.rb < foo.scss
+```
 
-or make it executable and add this to the top of the file:
+or make it executable and add this like at the top:
+
+```
 #! /path/to/your/ruby
+```
 
-I usually call it from within vim.
+Personally I like to call it from Vim
 
-## Try it out
+## Demos
 
 The demo folder contains some .scss files that end up nicely indented when you run them through the script.
 
